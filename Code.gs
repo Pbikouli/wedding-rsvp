@@ -63,9 +63,12 @@ function doPost(e) {
       data.message || "",
       data.language || ""
     ]);
+    console.log("Row appended. Spreadsheet: " + SpreadsheetApp.getActiveSpreadsheet().getName() +
+                " | URL: " + SpreadsheetApp.getActiveSpreadsheet().getUrl() +
+                " | rows now: " + sheet.getLastRow());
 
     if (data.email && /\S+@\S+\.\S+/.test(data.email)) {
-      try { sendConfirmation_(data); } catch (mailErr) { /* don't fail the RSVP if mail fails */ }
+      try { sendConfirmation_(data); } catch (mailErr) { console.error("Email failed: " + mailErr); }
     }
 
     return jsonResponse_({ result: "success" });
@@ -76,8 +79,42 @@ function doPost(e) {
   }
 }
 
+/**
+ * Run this manually from the editor to verify storage works against the
+ * spreadsheet you are looking at. It appends a clearly-marked test row and
+ * logs which spreadsheet it wrote to.
+ */
+function testStore() {
+  const sheet = getSheet_();
+  sheet.appendRow([new Date(), "", "STORE TEST", "", "test", "", "", "", "", ""]);
+  Logger.log("Wrote STORE TEST to: " + SpreadsheetApp.getActiveSpreadsheet().getName() +
+             " (" + SpreadsheetApp.getActiveSpreadsheet().getUrl() + "), rows now: " + sheet.getLastRow());
+}
+
 function doGet() {
   return jsonResponse_({ result: "ok", message: "RSVP endpoint is live." });
+}
+
+/**
+ * Run this manually from the Apps Script editor (select "testEmail" in the
+ * function dropdown, click Run). It will:
+ *   1. Prompt you to authorize sending email (the missing permission).
+ *   2. Send a sample confirmation to your own Gmail so you can see it works.
+ * Check your inbox AND spam folder afterwards.
+ */
+function testEmail() {
+  const me = Session.getActiveUser().getEmail();
+  sendConfirmation_({
+    name: "Test Guest",
+    email: me,
+    attending: "yes",
+    guests: "3",
+    shuttle: "yes",
+    shuttleSeats: "2",
+    message: "This is a test.",
+    language: "el"
+  });
+  Logger.log("Test email sent to: " + me);
 }
 
 function getSheet_() {
