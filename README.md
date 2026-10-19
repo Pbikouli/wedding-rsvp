@@ -85,8 +85,45 @@ updates automatically within a minute.
 ## Reading responses
 
 Open your Google Sheet → the **RSVPs** tab. Each submission is one row with:
-timestamp, name/family, attending (yes/no), number of guests, shuttle (yes/no),
-shuttle seats, message, and the language the guest used.
+timestamp, name/family, **email**, attending (yes/no), number of guests,
+shuttle (yes/no), shuttle seats, message, and the language the guest used.
+
+---
+
+## Confirmation emails
+
+If a guest fills in the optional **Email** field, `Code.gs` automatically sends
+them a confirmation email (in their chosen language) with a summary of their
+reply plus all the wedding details and map links.
+
+- The email is sent **from your Gmail**. The first time it runs, Google asks for
+  extra authorization (permission to send mail) — allow it.
+- **Daily limit:** a free Gmail account can send ~100 emails/day via Apps
+  Script. That's plenty for staggered RSVPs; only relevant if 100+ guests reply
+  on the same day.
+- ⚠️ **After editing `Code.gs` you must redeploy a new version:**
+  **Deploy → Manage deployments → ✏ edit → Version: New version → Deploy.**
+  The URL stays the same.
+
+---
+
+## Custom domain (optional, makes the link "cuter")
+
+The site is safe to expose publicly (no secrets, the Sheet stays private), so a
+custom domain is purely cosmetic.
+
+1. Buy a domain (~€8–15/yr) from Namecheap / Porkbun / GoDaddy, e.g.
+   `periklis-and-genesis.com`.
+2. In the repo, add a file named **`CNAME`** (no extension) containing just the
+   domain, e.g. `periklis-and-genesis.com`.
+3. At your registrar's DNS settings add, for an apex domain, four **A records**
+   pointing to GitHub Pages:
+   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   (and a `CNAME` record for `www` → `<username>.github.io`).
+4. GitHub repo **Settings → Pages → Custom domain** → enter the domain → Save →
+   wait for the DNS check → tick **Enforce HTTPS**.
+
+DNS can take 10–60 minutes to propagate.
 
 ---
 
