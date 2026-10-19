@@ -42,6 +42,8 @@ const I18N = {
     rsvpTitle: "Επιβεβαίωση Παρουσίας",
     rsvpDeadline: "Παρακαλούμε απαντήστε το συντομότερο δυνατό.",
     fieldName: "Ονοματεπώνυμο / Οικογένεια",
+    fieldEmail: "Email",
+    emailHint: "Προαιρετικό – συμπληρώστε το για να λάβετε επιβεβαίωση με όλες τις πληροφορίες.",
     fieldAttending: "Θα παρευρεθείτε;",
     fieldGuests: "Αριθμός ατόμων που θα έρθουν",
     fieldShuttle: "Θα χρησιμοποιήσετε το λεωφορείο;",
@@ -52,6 +54,7 @@ const I18N = {
     submit: "Αποστολή",
     sending: "Αποστολή…",
     success: "Ευχαριστούμε! Η απάντησή σας καταχωρήθηκε.",
+    alreadySent: "Έχετε ήδη απαντήσει. Μπορείτε να αλλάξετε την απάντησή σας και να στείλετε ξανά.",
     error: "Κάτι πήγε στραβά. Παρακαλούμε δοκιμάστε ξανά.",
     required: "Παρακαλούμε συμπληρώστε το όνομά σας."
   },
@@ -83,6 +86,8 @@ const I18N = {
     rsvpTitle: "Confirmación de asistencia",
     rsvpDeadline: "Por favor, responde lo antes posible.",
     fieldName: "Nombre / Familia",
+    fieldEmail: "Correo electrónico",
+    emailHint: "Opcional – indícalo para recibir una confirmación con toda la información.",
     fieldAttending: "¿Asistirás?",
     fieldGuests: "Número de personas que asistirán",
     fieldShuttle: "¿Usarás el autobús?",
@@ -93,6 +98,7 @@ const I18N = {
     submit: "Enviar",
     sending: "Enviando…",
     success: "¡Gracias! Tu respuesta ha sido registrada.",
+    alreadySent: "Ya has respondido. Puedes cambiar tu respuesta y enviarla de nuevo.",
     error: "Algo salió mal. Por favor, inténtalo de nuevo.",
     required: "Por favor, introduce tu nombre."
   },
@@ -124,6 +130,8 @@ const I18N = {
     rsvpTitle: "Confirmation de présence",
     rsvpDeadline: "Merci de répondre dès que possible.",
     fieldName: "Nom / Famille",
+    fieldEmail: "E-mail",
+    emailHint: "Facultatif – indiquez-le pour recevoir une confirmation avec toutes les informations.",
     fieldAttending: "Serez-vous présent·e ?",
     fieldGuests: "Nombre de personnes présentes",
     fieldShuttle: "Utiliserez-vous la navette ?",
@@ -134,6 +142,7 @@ const I18N = {
     submit: "Envoyer",
     sending: "Envoi…",
     success: "Merci ! Votre réponse a bien été enregistrée.",
+    alreadySent: "Vous avez déjà répondu. Vous pouvez modifier votre réponse et l'envoyer à nouveau.",
     error: "Une erreur s'est produite. Veuillez réessayer.",
     required: "Veuillez saisir votre nom."
   }
@@ -203,6 +212,29 @@ function toggleConditionalFields() {
     .classList.toggle("is-hidden", !isAttending || shuttle !== "yes");
 }
 
+const RSVP_FIELDS = ["name", "email", "attending", "guests", "shuttle", "shuttleSeats", "message"];
+
+// Remember the guest's answers so the form stays filled in (even after a reload).
+function saveFormData() {
+  const data = {};
+  RSVP_FIELDS.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) data[id] = el.value;
+  });
+  try { localStorage.setItem("weddingRSVP", JSON.stringify(data)); } catch (e) {}
+}
+
+function restoreFormData() {
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem("weddingRSVP") || "null"); } catch (e) {}
+  if (!data) return false;
+  RSVP_FIELDS.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el && data[id] !== undefined) el.value = data[id];
+  });
+  return true;
+}
+
 function setupForm() {
   const form = document.getElementById("rsvp-form");
   const status = document.getElementById("form-status");
@@ -210,7 +242,12 @@ function setupForm() {
 
   document.getElementById("attending").addEventListener("change", toggleConditionalFields);
   document.getElementById("shuttle").addEventListener("change", toggleConditionalFields);
+  const hadPrevious = restoreFormData();
   toggleConditionalFields();
+  if (hadPrevious) {
+    status.textContent = I18N[currentLang].alreadySent;
+    status.classList.add("success");
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -228,6 +265,7 @@ function setupForm() {
     const attending = document.getElementById("attending").value;
     const payload = {
       name: name,
+      email: document.getElementById("email").value.trim(),
       attending: attending,
       guests: attending === "yes" ? document.getElementById("guests").value : "0",
       shuttle: attending === "yes" ? document.getElementById("shuttle").value : "no",
@@ -253,8 +291,8 @@ function setupForm() {
       // With mode:"no-cors" the response is opaque; assume success if no network error.
       status.textContent = dict.success;
       status.classList.add("success");
-      form.reset();
-      toggleConditionalFields();
+      // Keep the form filled in and remember it for next time (clearer for the guest).
+      saveFormData();
     } catch (err) {
       status.textContent = dict.error;
       status.classList.add("error");
@@ -273,6 +311,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => applyLanguage(btn.dataset.lang))
   );
   setupMaps();
-  setupForm();
   applyLanguage(detectInitialLang());
+  setupForm();
 });

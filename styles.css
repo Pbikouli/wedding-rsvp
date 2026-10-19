@@ -310,6 +310,12 @@ body {
   border-color: var(--accent);
 }
 .field textarea { resize: vertical; }
+.field-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0;
+  text-transform: none;
+}
 
 .form-status {
   text-align: center;
