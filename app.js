@@ -53,7 +53,7 @@ const I18N = {
     optNo: "Όχι",
     submit: "Αποστολή",
     sending: "Αποστολή…",
-    credit: "⚡ Powered by Peri's vibecoding — τυχόν bugs θεωρούνται χαρακτηριστικά 💍",
+    credit: "⚡ Powered by Peri's vibecoding — τυχόν bugs θεωρούνται features 💍",
     success: "Ευχαριστούμε! Η απάντησή σας καταχωρήθηκε.",
     alreadySent: "Έχετε ήδη απαντήσει. Μπορείτε να αλλάξετε την απάντησή σας και να στείλετε ξανά.",
     error: "Κάτι πήγε στραβά. Παρακαλούμε δοκιμάστε ξανά.",
