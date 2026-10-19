@@ -2,7 +2,7 @@
    CONFIG — paste your Google Apps Script Web App URL here
    (see README.md, step "Google Sheets backend").
    ============================================================ */
-const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbwwJgqJz__yaM96sTaVhbyfVlo6MbRqjsHYOjYubF6FXLEsje99U1NT5xJzZATWbViRiw/exec";
+const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbwX5mZPgQdE1yVCNc_Iy4grZzQ1reOhs3U6ryI3QoJpfv_Eqopt4iif5psTui1BB4AyBA/exec";
 
 /* Addresses used for the embedded maps (shown in all languages). */
 const CHURCH_ADDRESS = "Παναγία Ελευθερώτρια, Λόφος Πατρίς-Ευρυπίδειο Θέατρο, Σαλαμίνα 18900";
