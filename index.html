@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Periklis &amp; Génesis</title>
+  <meta name="description" content="Wedding invitation" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Language toggle -->
+  <nav class="lang-toggle" aria-label="Language selector">
+    <button type="button" class="lang-btn" data-lang="el">ΕΛ</button>
+    <button type="button" class="lang-btn" data-lang="es">ES</button>
+    <button type="button" class="lang-btn" data-lang="fr">FR</button>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-pretitle" data-i18n="pretitle"></p>
+      <h1 class="names" data-i18n="names"></h1>
+      <p class="hero-date" data-i18n="heroDate"></p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Intro message -->
+    <section class="section intro">
+      <p class="intro-text" data-i18n="intro"></p>
+    </section>
+
+    <!-- Details: ceremony + reception -->
+    <section class="section details">
+      <h2 class="section-title" data-i18n="detailsTitle"></h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon">&#9962;</div>
+          <h3 data-i18n="ceremonyTitle"></h3>
+          <p class="card-time" data-i18n="ceremonyTime"></p>
+          <p class="card-place" data-i18n="churchName"></p>
+        </article>
+        <article class="card">
+          <div class="card-icon">&#127870;</div>
+          <h3 data-i18n="receptionTitle"></h3>
+          <p class="card-time" data-i18n="receptionTime"></p>
+          <p class="card-place" data-i18n="venueName"></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Maps -->
+    <section class="section maps">
+      <h2 class="section-title" data-i18n="mapsTitle"></h2>
+      <div class="map-grid">
+        <div class="map-block">
+          <h3 data-i18n="churchMapLabel"></h3>
+          <div class="map-frame">
+            <iframe id="church-map" title="Church map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+          <a class="btn btn-outline" id="church-link" target="_blank" rel="noopener" data-i18n="openInMaps"></a>
+        </div>
+        <div class="map-block">
+          <h3 data-i18n="venueMapLabel"></h3>
+          <div class="map-frame">
+            <iframe id="venue-map" title="Venue map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+          <a class="btn btn-outline" id="venue-link" target="_blank" rel="noopener" data-i18n="openInMaps"></a>
+        </div>
+      </div>
+
+      <div class="ferry-box">
+        <h3 data-i18n="ferryTitle"></h3>
+        <p class="ferry-intro" data-i18n="ferryIntro"></p>
+        <ul class="ferry-list">
+          <li>
+            <span class="ferry-route" data-i18n="ferryRoute1Name"></span>
+            <span class="ferry-desc" data-i18n="ferryRoute1Desc"></span>
+          </li>
+          <li>
+            <span class="ferry-route" data-i18n="ferryRoute2Name"></span>
+            <span class="ferry-desc" data-i18n="ferryRoute2Desc"></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="section notes">
+      <div class="note-box">
+        <h3 data-i18n="notesTitle"></h3>
+        <p data-i18n="notesBody"></p>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section rsvp">
+      <h2 class="section-title" data-i18n="rsvpTitle"></h2>
+      <p class="rsvp-sub" data-i18n="rsvpDeadline"></p>
+
+      <form id="rsvp-form" class="rsvp-form" novalidate>
+        <div class="field">
+          <label for="name" data-i18n="fieldName"></label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="attending" data-i18n="fieldAttending"></label>
+          <select id="attending" name="attending" required>
+            <option value="yes" data-i18n="optYes"></option>
+            <option value="no" data-i18n="optNo"></option>
+          </select>
+        </div>
+
+        <div class="field" id="guests-field">
+          <label for="guests" data-i18n="fieldGuests"></label>
+          <input type="number" id="guests" name="guests" min="1" max="20" step="1" value="1" />
+        </div>
+
+        <div class="field" id="shuttle-field">
+          <label for="shuttle" data-i18n="fieldShuttle"></label>
+          <select id="shuttle" name="shuttle">
+            <option value="yes" data-i18n="optYes"></option>
+            <option value="no" data-i18n="optNo"></option>
+          </select>
+        </div>
+
+        <div class="field" id="shuttle-seats-field">
+          <label for="shuttleSeats" data-i18n="fieldShuttleSeats"></label>
+          <input type="number" id="shuttleSeats" name="shuttleSeats" min="0" max="20" step="1" value="0" />
+        </div>
+
+        <div class="field">
+          <label for="message" data-i18n="fieldMessage"></label>
+          <textarea id="message" name="message" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-solid" id="submit-btn" data-i18n="submit"></button>
+
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-names" data-i18n="names"></p>
+    <p class="footer-date" data-i18n="heroDate"></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
