@@ -68,6 +68,7 @@ body {
   padding: 80px 20px;
   background:
     linear-gradient(rgba(247, 243, 238, 0.55), rgba(247, 243, 238, 0.85)),
+    url("images/hero.jpg") center / cover no-repeat,
     radial-gradient(circle at 50% 30%, #efe6d8, #f7f3ee 70%);
   border-bottom: 1px solid var(--line);
 }
@@ -357,4 +358,31 @@ body {
 
 @media (max-width: 520px) {
   .section { padding: 50px 20px; }
+}
+.details {
+  border-radius: 18px;
+  background-image:
+    linear-gradient(rgba(247, 243, 238, 0.88), rgba(247, 243, 238, 0.93)),
+    url("images/details.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.rsvp {
+  border-radius: 18px;
+  background-image:
+    linear-gradient(rgba(247, 243, 238, 0.9), rgba(247, 243, 238, 0.95)),
+    url("images/rsvp.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.footer {
+  border-radius: 18px;
+  background-image:
+    linear-gradient(rgba(247, 243, 238, 0.86), rgba(247, 243, 238, 0.93)),
+    url("images/footer.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
