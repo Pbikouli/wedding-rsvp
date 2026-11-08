@@ -329,6 +329,113 @@ body {
 
 .is-hidden { display: none !important; }
 
+/* Countdown */
+.countdown { text-align: center; }
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.cd-unit {
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 22px 10px;
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cd-num {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 7vw, 3.2rem);
+  line-height: 1;
+  color: var(--accent-dark);
+  font-variant-numeric: tabular-nums;
+}
+.cd-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.countdown-over {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  color: var(--accent-dark);
+  margin: 0;
+}
+
+/* Gifts / IBAN */
+.gifts { max-width: 760px; }
+.gifts-intro {
+  text-align: center;
+  color: var(--ink);
+  margin: -24px auto 40px;
+  max-width: 600px;
+}
+.gift-grid { display: grid; gap: 22px; }
+.gift-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 14px;
+  padding: 24px 26px;
+  box-shadow: var(--shadow);
+}
+.gift-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.gift-flag { font-size: 1.5rem; line-height: 1; }
+.gift-bank {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+}
+.gift-benef { margin: 0 0 16px; display: flex; flex-direction: column; gap: 3px; }
+.gift-field-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.gift-field-value { color: var(--ink); }
+.gift-iban-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.gift-iban {
+  font-family: "Jost", "Courier New", monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  flex: 1 1 auto;
+  word-break: break-all;
+}
+.gift-copy {
+  padding: 9px 18px;
+  font-size: 0.75rem;
+  flex: 0 0 auto;
+}
+.gift-copy.copied {
+  background: var(--accent);
+  color: #fff;
+}
+
 /* Footer */
 .footer {
   text-align: center;
