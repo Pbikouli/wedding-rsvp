@@ -41,6 +41,13 @@ const WEDDING = {
   venueMapLink: "https://maps.app.goo.gl/vVzLNeqgdw6FoMfp8"
 };
 
+/* Bank accounts for wedding gifts (same list shown on the site). */
+const GIFT_ACCOUNTS = [
+  { flag: "🇪🇸", beneficiary: "GENESIS STEPHANIE SANCHEZ PIGUAVE", bank: "Banco Santander · BSCHESMMXXX", iban: "ES70 0049 4437 6828 9001 9401" },
+  { flag: "🇫🇷", beneficiary: "SANCHEZ PIGUAVE GENESIS", bank: "BNP Paribas · BNPAFRPPXXX", iban: "FR76 3000 4010 2700 0003 6873 652" },
+  { flag: "🇬🇷", beneficiary: "ΜΠΙΚΟΥΛΗΣ ΠΕΡΙΚΛΗΣ ΚΩΝΣΤΑΝΤΙΝΟΣ SANCHEZ PIGUAVE GENESIS STEPHANIE YOFFRE ALCIDES", bank: "Eurobank · ERBKGRAAXXX", iban: "GR02 0260 0270 0003 5010 1963 835" }
+];
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(30000);
@@ -171,6 +178,9 @@ function sendConfirmation_(data) {
       '<p>' + t.ferryIntro + '</p>' +
       '<p><strong>' + t.ferry1name + '</strong><br>' + t.ferry1desc + '</p>' +
       '<p><strong>' + t.ferry2name + '</strong><br>' + t.ferry2desc + '</p>' +
+      '<h3 style="color:#7a5d3d;border-bottom:1px solid #e4dacd;padding-bottom:6px;margin-top:28px;">' + t.giftsTitle + '</h3>' +
+      '<p>' + t.giftsIntro + '</p>' +
+      giftAccountsHtml_(t) +
       '<p style="text-align:center;color:#8a8077;margin-top:30px;">' + t.closing + '</p>' +
     '</div>';
 
@@ -182,8 +192,17 @@ function sendConfirmation_(data) {
   });
 }
 
-function row_(label, value) {
-  return '<tr>' +
+function giftAccountsHtml_(t) {
+  return GIFT_ACCOUNTS.map(function (acc) {
+    return '<div style="border:1px solid #e4dacd;border-left:4px solid #9c7a54;border-radius:10px;padding:14px 16px;margin:12px 0;">' +
+      '<p style="margin:0 0 8px;font-weight:bold;color:#7a5d3d;">' + acc.flag + ' ' + escapeHtml_(acc.bank) + '</p>' +
+      '<p style="margin:0 0 6px;color:#8a8077;font-size:13px;">' + t.lblBeneficiary + ': <span style="color:#3a3530;">' + escapeHtml_(acc.beneficiary) + '</span></p>' +
+      '<p style="margin:0;font-family:monospace;font-size:15px;letter-spacing:0.04em;color:#3a3530;">' + escapeHtml_(acc.iban) + '</p>' +
+    '</div>';
+  }).join("");
+}
+
+function row_(label, value) {  return '<tr>' +
     '<td style="padding:6px 10px 6px 0;color:#8a8077;white-space:nowrap;vertical-align:top;">' + label + '</td>' +
     '<td style="padding:6px 0;font-weight:bold;">' + value + '</td>' +
     '</tr>';
@@ -221,6 +240,10 @@ const EMAIL_I18N = {
     ferry1desc: "Διάρκεια ~10 λεπτά. Λειτουργεί μόνο κατά τη διάρκεια της ημέρας – δεν εκτελεί δρομολόγια τη νύχτα.",
     ferry2name: "Πέραμα – Παλούκια",
     ferry2desc: "Διάρκεια ~15 λεπτά. Λειτουργεί 24 ώρες: κάθε 15΄ τα Σαββατοκύριακα (05:30–00:00) και κάθε 30΄ τη νύχτα (00:00–05:30).",
+    giftsTitle: "Δώρα",
+    giftsIntro: "Αν θέλετε να μας κάνετε ένα δωράκι και να συνεισφέρετε στο ταξίδι του μέλιτος, μπορείτε να το κάνετε με τραπεζική μεταφορά ή από χέρι σε χέρι.",
+    lblBeneficiary: "Δικαιούχος",
+    lblBank: "Τράπεζα",
     closing: "Ανυπομονούμε να σας δούμε! — Περικλής & Γένεσις"
   },
   es: {
@@ -248,6 +271,10 @@ const EMAIL_I18N = {
     ferry1desc: "Duración ~10 minutos. Funciona solo de día: no opera de noche.",
     ferry2name: "Pérama – Palúkia",
     ferry2desc: "Duración ~15 minutos. Funciona 24 horas: cada 15 min los fines de semana (05:30–00:00) y cada 30 min por la noche (00:00–05:30).",
+    giftsTitle: "Regalos",
+    giftsIntro: "Si queréis tener un detalle con nosotros y contribuir a nuestro viaje de novios, podéis hacerlo mediante transferencia bancaria o en mano.",
+    lblBeneficiary: "Beneficiario",
+    lblBank: "Banco",
     closing: "¡Estamos deseando veros! — Periklis & Génesis"
   },
   fr: {
@@ -275,6 +302,10 @@ const EMAIL_I18N = {
     ferry1desc: "Durée ~10 minutes. En service le jour uniquement : ne circule pas la nuit.",
     ferry2name: "Pérama – Paloúkia",
     ferry2desc: "Durée ~15 minutes. En service 24h/24 : toutes les 15 min le week-end (05:30–00:00) et toutes les 30 min la nuit (00:00–05:30).",
+    giftsTitle: "Cadeaux",
+    giftsIntro: "Si vous souhaitez nous faire un petit cadeau et contribuer à notre voyage de noces, vous pouvez le faire par virement bancaire ou en main propre.",
+    lblBeneficiary: "Bénéficiaire",
+    lblBank: "Banque",
     closing: "Nous avons hâte de vous voir ! — Periklis & Génesis"
   }
 };
