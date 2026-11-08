@@ -10,6 +10,16 @@ const VENUE_ADDRESS  = "Ακταία, Άγγελου Σικελιανού 22, Α
 const CHURCH_MAPS_LINK = "https://maps.app.goo.gl/PeHwk2jD9yUeCwbf6";
 const VENUE_MAPS_LINK  = "https://maps.app.goo.gl/vVzLNeqgdw6FoMfp8";
 
+/* Ceremony date/time (Greek local time, summer = UTC+3) — used by the countdown. */
+const WEDDING_DATETIME = new Date("2027-07-24T18:00:00+03:00");
+
+/* Bank accounts for wedding gifts (shown in all languages + the email). */
+const GIFT_ACCOUNTS = [
+  { flag: "🇪🇸", beneficiary: "GENESIS STEPHANIE SANCHEZ PIGUAVE", bank: "Banco Santander · BSCHESMMXXX", iban: "ES70 0049 4437 6828 9001 9401" },
+  { flag: "🇫🇷", beneficiary: "SANCHEZ PIGUAVE GENESIS", bank: "BNP Paribas · BNPAFRPPXXX", iban: "FR76 3000 4010 2700 0003 6873 652" },
+  { flag: "🇬🇷", beneficiary: "ΜΠΙΚΟΥΛΗΣ ΠΕΡΙΚΛΗΣ ΚΩΝΣΤΑΝΤΙΝΟΣ SANCHEZ PIGUAVE GENESIS STEPHANIE YOFFRE ALCIDES", bank: "Eurobank · ERBKGRAAXXX", iban: "GR02 0260 0270 0003 5010 1963 835" }
+];
+
 /* ============================================================
    TRANSLATIONS
    ============================================================ */
@@ -20,6 +30,12 @@ const I18N = {
     names: "Περικλής & Γένεσις",
     heroDate: "Σάββατο, 24 Ιουλίου 2027",
     intro: "Με χαρά σας προσκαλούμε να γιορτάσετε μαζί μας αυτή την τόσο ξεχωριστή μέρα για μας. Η παρουσία σας είναι το πολυτιμότερο δώρο.",
+    countdownTitle: "Αντίστροφη μέτρηση",
+    cdDays: "Ημέρες",
+    cdHours: "Ώρες",
+    cdMinutes: "Λεπτά",
+    cdSeconds: "Δευτερόλεπτα",
+    countdownOver: "Η μεγάλη μέρα έφτασε! 💍",
     detailsTitle: "Λεπτομέρειες",
     ceremonyTitle: "Μυστήριο",
     ceremonyTime: "18:00",
@@ -41,6 +57,12 @@ const I18N = {
     notesBody: "Θα διατίθεται λεωφορείο για τη μετακίνηση των καλεσμένων. Σημείο συνάντησης: Αθήνα (η ακριβής τοποθεσία θα επιβεβαιωθεί αργότερα). Διαδρομή: Αθήνα – Εκκλησία – Χώρος Δεξίωσης – Αθήνα. Εάν επιθυμείτε να κάνετε χρήση αυτής της υπηρεσίας, παρακαλούμε δηλώστε το στη φόρμα επιβεβαίωσης παρουσίας.",
     rsvpTitle: "Επιβεβαίωση Παρουσίας",
     rsvpDeadline: "Παρακαλούμε για την απάντησή σας μέχρι 8 Μαΐου.",
+    giftsTitle: "Δώρα",
+    giftsIntro: "Αν θέλετε να μας κάνετε ένα δωράκι και να συνεισφέρετε στο ταξίδι του μέλιτος, μπορείτε να το κάνετε με τραπεζική μεταφορά ή από χέρι σε χέρι.",
+    lblBeneficiary: "Δικαιούχος",
+    lblBank: "Τράπεζα",
+    copyBtn: "Αντιγραφή",
+    copied: "Αντιγράφηκε!",
     fieldName: "Ονοματεπώνυμο / Οικογένεια",
     fieldEmail: "Email",
     emailHint: "Προαιρετικό – συμπληρώστε το για να λάβετε επιβεβαίωση με όλες τις πληροφορίες.",
@@ -65,6 +87,12 @@ const I18N = {
     names: "Periklis & Génesis",
     heroDate: "Sábado, 24 de julio de 2027",
     intro: "Nos gustaría que nos acompañarás en este día tan especial para nosotros. Vuestra presencia es el regalo más valioso.",
+    countdownTitle: "Cuenta atrás",
+    cdDays: "Días",
+    cdHours: "Horas",
+    cdMinutes: "Minutos",
+    cdSeconds: "Segundos",
+    countdownOver: "¡El gran día ha llegado! 💍",
     detailsTitle: "Detalles",
     ceremonyTitle: "Ceremonia",
     ceremonyTime: "18:00",
@@ -86,6 +114,12 @@ const I18N = {
     notesBody: "Posibilidad de tomar el autobús que pondremos a disposición de los invitados. Punto de encuentro: Atenas (lugar por determinar). Recorrido: Atenas - Iglesia - lugar de la recepción - Atenas. En caso de necesitarlo, indícalo en el formulario de confirmación.",
     rsvpTitle: "Confirmación de asistencia",
     rsvpDeadline: "Esperamos vuestra confirmación antes del 8 de mayo.",
+    giftsTitle: "Regalos",
+    giftsIntro: "Si queréis tener un detalle con nosotros y contribuir a nuestro viaje de novios, podéis hacerlo mediante transferencia bancaria o en mano.",
+    lblBeneficiary: "Beneficiario",
+    lblBank: "Banco",
+    copyBtn: "Copiar",
+    copied: "¡Copiado!",
     fieldName: "Nombre / Familia",
     fieldEmail: "Correo electrónico",
     emailHint: "Opcional – indícalo para recibir una confirmación con toda la información.",
@@ -110,6 +144,12 @@ const I18N = {
     names: "Periklis & Génesis",
     heroDate: "Samedi 24 juillet 2027",
     intro: "Nous aimerions vous avoir parmi nous lors de cette journée si spéciale pour nous. Votre présence est le plus précieux des cadeaux.",
+    countdownTitle: "Compte à rebours",
+    cdDays: "Jours",
+    cdHours: "Heures",
+    cdMinutes: "Minutes",
+    cdSeconds: "Secondes",
+    countdownOver: "Le grand jour est arrivé ! 💍",
     detailsTitle: "Détails",
     ceremonyTitle: "Cérémonie",
     ceremonyTime: "18:00",
@@ -131,6 +171,12 @@ const I18N = {
     notesBody: "Possibilité de prendre le bus que nous mettrons à la disposition des invités. Point de rendez-vous : Athènes (lieu à préciser ultérieurement). Trajet : Athènes – Église – lieu de la réception – Athènes. Si vous en avez besoin, merci de l'indiquer dans le formulaire de confirmation.",
     rsvpTitle: "Confirmation de présence",
     rsvpDeadline: "Veuillez confirmer avant le 8 mai.",
+    giftsTitle: "Cadeaux",
+    giftsIntro: "Si vous souhaitez nous faire un petit cadeau et contribuer à notre voyage de noces, vous pouvez le faire par virement bancaire ou en main propre.",
+    lblBeneficiary: "Bénéficiaire",
+    lblBank: "Banque",
+    copyBtn: "Copier",
+    copied: "Copié !",
     fieldName: "Nom / Famille",
     fieldEmail: "E-mail",
     emailHint: "Facultatif – indiquez-le pour recevoir une confirmation avec toutes les informations.",
@@ -307,6 +353,112 @@ function setupForm() {
 }
 
 /* ============================================================
+   COUNTDOWN
+   ============================================================ */
+function startCountdown() {
+  const grid = document.getElementById("countdown-grid");
+  const over = document.getElementById("countdown-over");
+  if (!grid || !over) return;
+
+  const elDays = document.getElementById("cd-days");
+  const elHours = document.getElementById("cd-hours");
+  const elMinutes = document.getElementById("cd-minutes");
+  const elSeconds = document.getElementById("cd-seconds");
+
+  function tick() {
+    const diff = WEDDING_DATETIME.getTime() - Date.now();
+    if (diff <= 0) {
+      grid.classList.add("is-hidden");
+      over.classList.remove("is-hidden");
+      return true;
+    }
+    const sec = Math.floor(diff / 1000);
+    elDays.textContent = Math.floor(sec / 86400);
+    elHours.textContent = Math.floor((sec % 86400) / 3600);
+    elMinutes.textContent = Math.floor((sec % 3600) / 60);
+    elSeconds.textContent = sec % 60;
+    return false;
+  }
+
+  if (tick()) return;
+  const timer = setInterval(() => { if (tick()) clearInterval(timer); }, 1000);
+}
+
+/* ============================================================
+   GIFTS / IBAN
+   ============================================================ */
+function setupGifts() {
+  const grid = document.getElementById("gift-grid");
+  if (!grid) return;
+
+  GIFT_ACCOUNTS.forEach((acc) => {
+    const card = document.createElement("article");
+    card.className = "gift-card";
+
+    const header = document.createElement("div");
+    header.className = "gift-head";
+    header.innerHTML =
+      '<span class="gift-flag">' + acc.flag + "</span>" +
+      '<span class="gift-bank"></span>';
+    header.querySelector(".gift-bank").textContent = acc.bank;
+
+    const benef = document.createElement("p");
+    benef.className = "gift-benef";
+    const benefLabel = document.createElement("span");
+    benefLabel.className = "gift-field-label";
+    benefLabel.setAttribute("data-i18n", "lblBeneficiary");
+    const benefValue = document.createElement("span");
+    benefValue.className = "gift-field-value";
+    benefValue.textContent = acc.beneficiary;
+    benef.append(benefLabel, benefValue);
+
+    const ibanRow = document.createElement("div");
+    ibanRow.className = "gift-iban-row";
+    const ibanValue = document.createElement("code");
+    ibanValue.className = "gift-iban";
+    ibanValue.textContent = acc.iban;
+    const copyBtn = document.createElement("button");
+    copyBtn.type = "button";
+    copyBtn.className = "btn btn-outline gift-copy";
+    copyBtn.setAttribute("data-i18n", "copyBtn");
+    copyBtn.addEventListener("click", () => copyIban(copyBtn, acc.iban));
+    ibanRow.append(ibanValue, copyBtn);
+
+    card.append(header, benef, ibanRow);
+    grid.appendChild(card);
+  });
+}
+
+function copyIban(btn, iban) {
+  const plain = iban.replace(/\s+/g, "");
+  const done = () => {
+    const dict = I18N[currentLang];
+    btn.textContent = dict.copied;
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = dict.copyBtn;
+      btn.classList.remove("copied");
+    }, 1600);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(plain).then(done).catch(() => fallbackCopy(plain, done));
+  } else {
+    fallbackCopy(plain, done);
+  }
+}
+
+function fallbackCopy(text, done) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); done(); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+/* ============================================================
    INIT
    ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
@@ -314,6 +466,8 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => applyLanguage(btn.dataset.lang))
   );
   setupMaps();
+  setupGifts();
   applyLanguage(detectInitialLang());
   setupForm();
+  startCountdown();
 });
